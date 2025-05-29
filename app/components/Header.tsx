@@ -2,6 +2,7 @@
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { TrendingUp, Menu, X, BarChart3, Newspaper, Home } from 'lucide-react';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,24 +16,24 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-40 bg-binanceGray/90 backdrop-blur-md border-b border-gray-800 transition-all duration-300">
       <nav className="max-w-7xl mx-auto flex justify-between items-center py-4 px-4">
-        <a href="/" className="flex items-center space-x-2">
+        <Link href="/" className="flex items-center space-x-2">
           <TrendingUp className="w-8 h-8 text-binanceYellow" />
           <span className="text-2xl font-bold text-binanceYellow">CryptoX</span>
-        </a>
+        </Link>
         
         <div className="flex items-center space-x-4">
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             <SignedIn>
               {menuItems.map((item) => (
-                <a
+                <Link
                   key={item.label}
                   href={item.href}
                   className="flex items-center space-x-2 text-white hover:text-binanceYellow transition-colors"
                 >
                   {item.icon}
                   <span>{item.label}</span>
-                </a>
+                </Link>
               ))}
             </SignedIn>
           </div>
@@ -53,12 +54,12 @@ export default function Header() {
 
           {/* Auth Buttons */}
           <SignedOut>
-            <a
+            <Link
               href="/sign-in"
               className="bg-binanceYellow text-binanceDark px-6 py-2 rounded-full font-medium hover:bg-yellow-400 transition-all duration-200"
             >
               Sign In
-            </a>
+            </Link>
           </SignedOut>
 
           <SignedIn>
@@ -82,7 +83,7 @@ export default function Header() {
           <div className="px-4 py-6 space-y-4">
             <SignedIn>
               {menuItems.map((item) => (
-                <a
+                <Link
                   key={item.label}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
@@ -90,7 +91,7 @@ export default function Header() {
                 >
                   {item.icon}
                   <span className="font-medium">{item.label}</span>
-                </a>
+                </Link>
               ))}
             </SignedIn>
           </div>
