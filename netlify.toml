@@ -4,3 +4,7 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Cache optimization
+[context.production.environment]
+  NEXT_BUILD_CACHE = "true"

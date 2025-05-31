@@ -31,7 +31,8 @@ export default function ProfessionalHomepage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-              <SignInButton mode="redirect" redirectUrl="/dashboard">
+              {/* Fixed SignInButton with correct prop */}
+              <SignInButton mode="redirect" afterSignInUrl="/dashboard">
                 <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <span className="relative z-10">Access Dashboard</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
@@ -133,7 +134,8 @@ export default function ProfessionalHomepage() {
             <p className="text-blue-100 mb-8 text-lg">
               Join the next generation of cryptocurrency traders. Get started in less than 60 seconds.
             </p>
-            <SignInButton mode="redirect" redirectUrl="/dashboard">
+            {/* Fixed SignInButton with correct prop */}
+            <SignInButton mode="redirect" afterSignInUrl="/dashboard">
               <button className="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:scale-105 transition-all duration-200">
                 Start Trading Now →
               </button>
