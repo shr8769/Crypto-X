@@ -11,6 +11,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartData,
 } from 'chart.js';
 
 ChartJS.register(
@@ -24,11 +25,14 @@ ChartJS.register(
   Legend
 );
 
+type ChartDataType = ChartData<'line', number[], string>;
+type VolumeDataType = ChartData<'bar', number[], string>;
+
 export default function Analysis() {
   const [selectedCoin, setSelectedCoin] = useState('bitcoin');
   const [timeRange, setTimeRange] = useState('7');
-  const [chartData, setChartData] = useState(null);
-  const [volumeData, setVolumeData] = useState(null);
+  const [chartData, setChartData] = useState<ChartDataType | null>(null);
+  const [volumeData, setVolumeData] = useState<VolumeDataType | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,11 +47,11 @@ export default function Analysis() {
       );
       const data = await response.json();
       
-      const labels = data.prices.map((price) =>
+      const labels = data.prices.map((price: [number, number]) =>
         new Date(price[0]).toLocaleDateString()
       );
-      const prices = data.prices.map((price) => price[1]);
-      const volumes = data.total_volumes.map((volume) => volume[1]);
+      const prices = data.prices.map((price: [number, number]) => price[1]);
+      const volumes = data.total_volumes.map((volume: [number, number]) => volume[1]);
 
       setChartData({
         labels,
