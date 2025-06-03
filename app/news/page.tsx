@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { TrendingUp, TrendingDown, Calendar, ExternalLink } from "lucide-react";
+import { Calendar, ExternalLink } from "lucide-react";
 
 type NewsItem = {
   title: string;
@@ -28,7 +28,7 @@ export default function News() {
         const data = await response.json();
         setNews(data.results || []);
         setLoading(false);
-      } catch (err) {
+      } catch (_err) {
         setError("Failed to fetch news. Please try again later.");
         setLoading(false);
       }

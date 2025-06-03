@@ -1,9 +1,10 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: false,
+  // darkMode option removed to avoid warning and enforce light mode
   theme: {
     extend: {
       colors: {
@@ -19,4 +20,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};

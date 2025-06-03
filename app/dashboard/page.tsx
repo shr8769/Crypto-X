@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 type Coin = {
   id: string;
@@ -139,7 +140,7 @@ export default function Dashboard() {
       {/* Crypto Grid */}
       <div className="max-w-7xl mx-auto px-4 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {coins.map((coin, index) => (
+          {coins.map((coin, _index) => (
             <div
               key={coin.id}
               className="group bg-binanceGray rounded-2xl p-6 border border-binanceDark shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer"
@@ -147,10 +148,12 @@ export default function Dashboard() {
               {/* Coin Header */}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-3">
-                  <img
+                  <Image
                     src={coin.image}
                     alt={coin.name}
-                    className="w-10 h-10 rounded-full shadow-lg"
+                    width={40}
+                    height={40}
+                    className="rounded-full shadow-lg"
                   />
                   <div>
                     <h3 className="font-bold text-white group-hover:text-binanceYellow transition-colors">
@@ -183,7 +186,6 @@ export default function Dashboard() {
                   {coin.price_change_percentage_24h.toFixed(2)}%
                 </div>
               </div>
-
               {/* Stats */}
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">

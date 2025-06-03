@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -35,11 +35,7 @@ export default function Analysis() {
   const [volumeData, setVolumeData] = useState<VolumeDataType | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchChartData();
-  }, [selectedCoin, timeRange]);
-
-  const fetchChartData = async () => {
+  const fetchChartData = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(
@@ -82,7 +78,11 @@ export default function Analysis() {
       console.error('Error fetching chart data:', error);
     }
     setLoading(false);
-  };
+  }, [selectedCoin, timeRange]);
+
+  useEffect(() => {
+    fetchChartData();
+  }, [fetchChartData]);
 
   const chartOptions = {
     responsive: true,
@@ -103,13 +103,13 @@ export default function Analysis() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-950 dark:to-slate-900 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-8">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
             Crypto Analysis
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 text-lg">
+          <p className="text-gray-600 text-lg">
             Advanced cryptocurrency analytics and charts
           </p>
         </div>
@@ -119,7 +119,7 @@ export default function Analysis() {
           <select
             value={selectedCoin}
             onChange={(e) => setSelectedCoin(e.target.value)}
-            className="px-4 py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-gray-200 dark:border-gray-700"
+            className="px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-gray-200"
           >
             <option value="bitcoin">Bitcoin</option>
             <option value="ethereum">Ethereum</option>
@@ -131,7 +131,7 @@ export default function Analysis() {
           <select
             value={timeRange}
             onChange={(e) => setTimeRange(e.target.value)}
-            className="px-4 py-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-gray-200 dark:border-gray-700"
+            className="px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-gray-200"
           >
             <option value="1">1 Day</option>
             <option value="7">7 Days</option>
@@ -144,21 +144,21 @@ export default function Analysis() {
         {loading ? (
           <div className="text-center py-20">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400"></div>
-            <p className="mt-4 text-gray-600 dark:text-gray-300">Loading analysis...</p>
+            <p className="mt-4 text-gray-600">Loading analysis...</p>
           </div>
         ) : (
           <div className="grid gap-8">
             {/* Price Chart */}
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-6 shadow-xl">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-xl">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">
                 Price Movement
               </h3>
               {chartData && <Line data={chartData} options={chartOptions} />}
             </div>
 
             {/* Volume Chart */}
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-6 shadow-xl">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-xl">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">
                 Trading Volume
               </h3>
               {volumeData && <Bar data={volumeData} options={chartOptions} />}
