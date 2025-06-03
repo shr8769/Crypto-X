@@ -28,7 +28,7 @@ export default function News() {
         const data = await response.json();
         setNews(data.results || []);
         setLoading(false);
-      } catch (_err) {
+      } catch {
         setError("Failed to fetch news. Please try again later.");
         setLoading(false);
       }
@@ -48,11 +48,11 @@ export default function News() {
   const getSentimentIcon = () => (
     <Calendar className="w-5 h-5 text-gray-400" />
   );
-  const getSentimentColor = () => "border-l-gray-400 bg-gray-900/30";
+  const getSentimentColor = () => "border-l-gray-400 bg-gray-100";
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-binanceDark flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center">
         <div className="relative">
           <div className="w-16 h-16 border-4 border-green-400 border-t-white rounded-full animate-spin"></div>
           <div className="mt-4 text-center text-gray-400 font-medium">
@@ -65,7 +65,7 @@ export default function News() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-binanceDark flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center">
         <div className="text-red-400 text-center max-w-md">
           <div className="text-xl mb-4">⚠️ News Update Error</div>
           <div>{error}</div>
@@ -76,7 +76,7 @@ export default function News() {
 
   if (!news.length) {
     return (
-      <div className="min-h-screen bg-binanceDark flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center">
         <div className="text-gray-400">No news available at the moment</div>
       </div>
     );
@@ -85,12 +85,12 @@ export default function News() {
   const item = news[current];
 
   return (
-    <div className="min-h-screen bg-binanceDark flex flex-col items-center py-16 px-4">
+    <div className="min-h-screen bg-white flex flex-col items-center py-16 px-4">
       <div className="max-w-3xl w-full">
-        <h1 className="text-4xl font-bold text-center text-green-300 mb-2">
+        <h1 className="text-4xl font-bold text-center text-green-600 mb-2">
           Live Crypto News
         </h1>
-        <p className="text-lg text-center text-gray-300 mb-10">
+        <p className="text-lg text-center text-gray-600 mb-10">
           Real-time updates from 500+ trusted sources
         </p>
 
@@ -102,7 +102,7 @@ export default function News() {
             <div className="flex items-center space-x-3">
               {getSentimentIcon()}
               <div>
-                <h2 className="text-xl font-bold text-green-100 leading-tight">
+                <h2 className="text-xl font-bold text-green-800 leading-tight">
                   {item.title}
                 </h2>
                 <div className="flex items-center space-x-2 mt-2 text-sm text-gray-400">
@@ -124,16 +124,16 @@ export default function News() {
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 p-2 hover:bg-gray-800 rounded-full transition-colors"
+              className="ml-2 p-2 hover:bg-gray-200 rounded-full transition-colors"
               aria-label="Read full article"
             >
-              <ExternalLink className="w-5 h-5 text-gray-400 hover:text-green-300" />
+              <ExternalLink className="w-5 h-5 text-gray-400 hover:text-green-600" />
             </a>
           </div>
-          <p className="text-gray-200 leading-relaxed">{item.description}</p>
+          <p className="text-gray-800 leading-relaxed">{item.description}</p>
 
           {/* Progress Bar */}
-          <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden mt-4">
+          <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden mt-4">
             <div
               className="h-full bg-green-400 transition-all duration-1000"
               style={{ animation: "progress 10s linear forwards" }}
@@ -148,7 +148,7 @@ export default function News() {
               key={index}
               onClick={() => setCurrent(index)}
               className={`w-3 h-3 rounded-full transition-colors ${
-                index === current ? "bg-green-400" : "bg-gray-600"
+                index === current ? "bg-green-400" : "bg-gray-400"
               }`}
               aria-label={`News item ${index + 1}`}
             />

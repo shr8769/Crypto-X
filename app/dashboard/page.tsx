@@ -140,7 +140,7 @@ export default function Dashboard() {
       {/* Crypto Grid */}
       <div className="max-w-7xl mx-auto px-4 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {coins.map((coin, _index) => (
+          {coins.map((coin) => (
             <div
               key={coin.id}
               className="group bg-binanceGray rounded-2xl p-6 border border-binanceDark shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer"
