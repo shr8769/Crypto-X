@@ -1,40 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCryptoPrices } from "@/hooks/useCryptoPrices";
 import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowUpRight, ArrowDownRight, TrendingUp } from "lucide-react";
-
-interface CryptoPrice {
-  name: string;
-  symbol: string;
-  price: number;
-  change: number;
-  volume: string;
-}
+import { formatCurrency, formatPercentage, getChangeColor } from "@/utils/formatters";
 
 const Dashboard = () => {
-  const [cryptoPrices, setCryptoPrices] = useState<CryptoPrice[]>([
-    { name: "Bitcoin", symbol: "BTC", price: 52291, change: 2.34, volume: "$84.42B" },
-    { name: "Ethereum", symbol: "ETH", price: 2980.81, change: 1.87, volume: "$32.15B" },
-    { name: "Cardano", symbol: "ADA", price: 0.52, change: -0.45, volume: "$804.42M" },
-    { name: "Solana", symbol: "SOL", price: 98.45, change: 5.67, volume: "$2.34B" },
-    { name: "Polkadot", symbol: "DOT", price: 7.23, change: 1.23, volume: "$234.56M" },
-    { name: "Ripple", symbol: "XRP", price: 0.63, change: -1.12, volume: "$1.23B" },
-  ]);
-
-  // Simulate real-time price updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCryptoPrices((prev) =>
-        prev.map((crypto) => ({
-          ...crypto,
-          price: crypto.price * (1 + (Math.random() - 0.5) * 0.01),
-          change: crypto.change + (Math.random() - 0.5) * 0.5,
-        }))
-      );
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const { prices: cryptoPrices, isLoading, error, refreshPrices } = useCryptoPrices();
 
   return (
     <div className="min-h-screen bg-gradient-dark">
@@ -126,23 +97,18 @@ const Dashboard = () => {
 
                   <div className="text-right">
                     <div className="font-bold text-lg">
-                      ${crypto.price.toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
+                      {formatCurrency(crypto.price)}
                     </div>
                     <div
-                      className={`flex items-center gap-1 text-sm justify-end ${
-                        crypto.change >= 0 ? "text-primary" : "text-destructive"
-                      }`}
+                      className={`flex items-center gap-1 text-sm justify-end ${getChangeColor(crypto.changePercent)}`}
                     >
-                      {crypto.change >= 0 ? (
+                      {crypto.changePercent >= 0 ? (
                         <ArrowUpRight className="w-4 h-4" />
                       ) : (
                         <ArrowDownRight className="w-4 h-4" />
                       )}
                       <span>
-                        {Math.abs(crypto.change).toFixed(2)}%
+                        {formatPercentage(Math.abs(crypto.changePercent))}
                       </span>
                     </div>
                   </div>

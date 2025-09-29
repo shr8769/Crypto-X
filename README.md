@@ -1,73 +1,127 @@
-# Welcome to your Lovable project
+# CryptoX - Next-Gen Crypto Trading Platform
 
-## Project info
+A modern, professional cryptocurrency trading platform built with React, TypeScript, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/d08d94bf-0697-408c-af86-ab9b85e26df4
+## 🚀 Features
 
-## How can I edit this code?
+- **Real-time Crypto Prices**: Live price updates for major cryptocurrencies
+- **Modern Dashboard**: Clean, professional interface with real-time data
+- **Responsive Design**: Works seamlessly on desktop and mobile
+- **Dark Theme**: Sleek dark theme with cyan/green accents
+- **Type-Safe**: Built with TypeScript for better development experience
+- **Component-Based**: Modular React components for maintainability
 
-There are several ways of editing your application.
+## 🛠 Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: Tailwind CSS, shadcn/ui components
+- **Routing**: React Router DOM
+- **State Management**: React Query (TanStack Query)
+- **UI Components**: Radix UI primitives
+- **Icons**: Lucide React
+- **Build Tool**: Vite
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d08d94bf-0697-408c-af86-ab9b85e26df4) and start prompting.
+## 📁 Project Structure
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # shadcn/ui components
+│   ├── Navigation.tsx  # Main navigation component
+│   ├── Hero.tsx        # Landing page hero section
+│   └── index.ts        # Component exports
+├── pages/              # Page components
+│   ├── Index.tsx       # Landing page
+│   ├── Auth.tsx        # Authentication page
+│   ├── Dashboard.tsx   # Main dashboard
+│   ├── NotFound.tsx    # 404 page
+│   └── index.ts        # Page exports
+├── hooks/              # Custom React hooks
+│   ├── useCryptoPrices.ts # Crypto price data hook
+│   └── use-mobile.tsx  # Mobile detection hook
+├── utils/              # Utility functions
+│   └── formatters.ts   # Data formatting utilities
+├── types/              # TypeScript type definitions
+│   └── crypto.ts       # Crypto-related types
+├── constants/          # Application constants
+│   └── crypto.ts       # Crypto-related constants
+├── lib/                # Library configurations
+│   └── utils.ts        # Utility functions
+└── styles/
+    └── index.css       # Global styles and design system
 ```
 
-**Edit a file directly in GitHub**
+## 🎨 Design System
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The project uses a comprehensive design system with:
 
-**Use GitHub Codespaces**
+- **Colors**: Dark theme with cyan/green accent colors
+- **Typography**: Modern, readable font hierarchy
+- **Components**: Consistent spacing and styling
+- **Animations**: Smooth transitions and hover effects
+- **Responsive**: Mobile-first design approach
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🔧 Development
 
-## What technologies are used for this project?
+### Prerequisites
 
-This project is built with:
+- Node.js (v18 or higher)
+- npm or yarn
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Installation
 
-## How can I deploy this project?
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Simply open [Lovable](https://lovable.dev/projects/d08d94bf-0697-408c-af86-ab9b85e26df4) and click on Share -> Publish.
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Can I connect a custom domain to my Lovable project?
+4. Open [http://localhost:8080](http://localhost:8080) in your browser
 
-Yes, you can!
+### Available Scripts
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 📱 Pages
+
+- **/** - Landing page with hero section and features
+- **/auth** - Login and signup page
+- **/dashboard** - Main trading dashboard with live prices
+- **404** - Custom not found page
+
+## 🚀 Deployment
+
+The app can be deployed to any static hosting service:
+
+1. Build the project:
+   ```bash
+   npm run build
+   ```
+
+2. Deploy the `dist` folder to your hosting service
+
+## 📈 Future Enhancements
+
+- Real crypto API integration
+- User authentication and accounts
+- Portfolio tracking
+- Advanced charting
+- Trading functionality
+- Real-time notifications
+- Mobile app
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License.
