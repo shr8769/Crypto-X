@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Hexagon } from "lucide-react";
 
@@ -33,17 +32,13 @@ const Hero = () => {
 
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/auth">
-              <Button variant="hero" size="lg" className="w-full sm:w-auto">
-                Start Trading Now
-              </Button>
-            </Link>
-            <Link to="/dashboard">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto group">
-                View Markets
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+            <Button variant="hero" size="lg" className="w-full sm:w-auto">
+              Start Trading Now
+            </Button>
+            <Button variant="outline" size="lg" className="w-full sm:w-auto group">
+              View Markets
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </div>
 
           {/* Stats */}

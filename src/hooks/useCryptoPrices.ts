@@ -1,7 +1,41 @@
 import { useState, useEffect } from 'react';
 import { CryptoPrice } from '@/types/crypto';
 
-// Mock data for demonstration
+// CoinGecko API service
+const COINGECKO_API = 'https://api.coingecko.com/api/v3';
+
+const fetchCryptoPrices = async (): Promise<CryptoPrice[]> => {
+  try {
+    const response = await fetch(
+      `${COINGECKO_API}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h`
+    );
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch crypto data');
+    }
+    
+    const data = await response.json();
+    
+    return data.map((coin: any, index: number) => ({
+      id: coin.id,
+      name: coin.name,
+      symbol: coin.symbol.toUpperCase(),
+      price: coin.current_price,
+      change: coin.price_change_24h || 0,
+      changePercent: coin.price_change_percentage_24h || 0,
+      volume: `$${(coin.total_volume / 1e9).toFixed(2)}B`,
+      marketCap: `$${(coin.market_cap / 1e12).toFixed(2)}T`,
+      rank: coin.market_cap_rank || index + 1,
+      image: coin.image,
+    }));
+  } catch (error) {
+    console.error('Error fetching crypto prices:', error);
+    // Fallback to mock data if API fails
+    return mockCryptoPrices;
+  }
+};
+
+// Fallback mock data for when API is unavailable
 const mockCryptoPrices: CryptoPrice[] = [
   {
     id: 'bitcoin',
@@ -50,8 +84,8 @@ const mockCryptoPrices: CryptoPrice[] = [
 ];
 
 export const useCryptoPrices = () => {
-  const [prices, setPrices] = useState<CryptoPrice[]>(mockCryptoPrices);
-  const [isLoading, setIsLoading] = useState(false);
+  const [prices, setPrices] = useState<CryptoPrice[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -77,19 +111,33 @@ export const useCryptoPrices = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const refreshPrices = async () => {
+  const loadPrices = async () => {
     setIsLoading(true);
     try {
-      // In a real app, you would fetch from an API here
-      // await fetch('/api/crypto-prices');
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      const cryptoData = await fetchCryptoPrices();
+      setPrices(cryptoData);
       setError(null);
     } catch (err) {
       setError('Failed to fetch crypto prices');
+      setPrices(mockCryptoPrices); // Fallback to mock data
     } finally {
       setIsLoading(false);
     }
   };
+
+  const refreshPrices = () => {
+    loadPrices();
+  };
+
+  // Load prices on component mount
+  useEffect(() => {
+    loadPrices();
+    
+    // Set up auto-refresh every 30 seconds
+    const interval = setInterval(loadPrices, 30000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   return {
     prices,

@@ -9,6 +9,7 @@ export interface CryptoPrice {
   volume: string;
   marketCap: string;
   rank: number;
+  image?: string;
 }
 
 export interface UserPortfolio {
