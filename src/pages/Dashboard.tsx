@@ -1,11 +1,15 @@
 import { useCryptoPrices } from "@/hooks/useCryptoPrices";
+import { usePortfolioMetrics } from "@/hooks/usePortfolioMetrics";
+import { useUser } from "@clerk/clerk-react";
 import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowUpRight, ArrowDownRight, TrendingUp } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, TrendingUp, TrendingDown, Activity } from "lucide-react";
 import { formatCurrency, formatPercentage, getChangeColor } from "@/utils/formatters";
 
 const Dashboard = () => {
   const { prices: cryptoPrices, isLoading, error, refreshPrices } = useCryptoPrices();
+  const { metrics, isLoading: metricsLoading } = usePortfolioMetrics();
+  const { user } = useUser();
 
   return (
     <div className="min-h-screen bg-gradient-dark">
@@ -14,9 +18,11 @@ const Dashboard = () => {
       <div className="container mx-auto px-6 pt-28 pb-20">
         {/* Welcome section */}
         <div className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-bold mb-2">Welcome back, Trader</h1>
+          <h1 className="text-4xl font-bold mb-2">
+            Welcome back, {user?.firstName || user?.username || 'Trader'}
+          </h1>
           <p className="text-muted-foreground">
-            Here's a look at your performance and analytics.
+            Here's a look at your portfolio performance and market analytics.
           </p>
         </div>
 
@@ -25,14 +31,28 @@ const Dashboard = () => {
           <Card className="border-border/50 bg-card/50 backdrop-blur-sm animate-fade-in">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">
-                SPENT THIS MONTH
+                MARKET CAP
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">$5,950.64</div>
-              <div className="flex items-center gap-1 text-primary text-sm mt-2">
-                <ArrowUpRight className="w-4 h-4" />
-                <span>+2.34% from last month</span>
+              <div className="text-3xl font-bold">
+                {metricsLoading ? (
+                  <div className="animate-pulse bg-muted h-8 w-24 rounded"></div>
+                ) : (
+                  `$${metrics?.totalMarketCap.toFixed(1)}T`
+                )}
+              </div>
+              <div className="flex items-center gap-1 text-muted-foreground text-sm mt-2">
+                {metrics?.marketSentiment === 'bullish' ? (
+                  <ArrowUpRight className="w-4 h-4 text-green-500" />
+                ) : metrics?.marketSentiment === 'bearish' ? (
+                  <ArrowDownRight className="w-4 h-4 text-red-500" />
+                ) : (
+                  <Activity className="w-4 h-4" />
+                )}
+                <span className={metrics?.marketSentiment === 'bullish' ? 'text-green-500' : metrics?.marketSentiment === 'bearish' ? 'text-red-500' : 'text-muted-foreground'}>
+                  {metrics?.marketSentiment || 'loading'} market
+                </span>
               </div>
             </CardContent>
           </Card>
@@ -44,10 +64,16 @@ const Dashboard = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">$84.42B</div>
+              <div className="text-3xl font-bold">
+                {metricsLoading ? (
+                  <div className="animate-pulse bg-muted h-8 w-24 rounded"></div>
+                ) : (
+                  `$${metrics?.totalVolume24h.toFixed(1)}B`
+                )}
+              </div>
               <div className="flex items-center gap-1 text-muted-foreground text-sm mt-2">
                 <TrendingUp className="w-4 h-4" />
-                <span>Market activity</span>
+                <span>Real-time volume</span>
               </div>
             </CardContent>
           </Card>
@@ -55,14 +81,28 @@ const Dashboard = () => {
           <Card className="border-border/50 bg-card/50 backdrop-blur-sm animate-fade-in delay-200">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">
-                MARKET CAP
+                AVERAGE CHANGE
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">$804.42B</div>
-              <div className="flex items-center gap-1 text-primary text-sm mt-2">
-                <ArrowUpRight className="w-4 h-4" />
-                <span>+1.87% increase</span>
+              <div className="text-3xl font-bold">
+                {metricsLoading ? (
+                  <div className="animate-pulse bg-muted h-8 w-24 rounded"></div>
+                ) : (
+                  <span className={metrics && metrics.averageChange >= 0 ? 'text-green-500' : 'text-red-500'}>
+                    {metrics?.averageChange >= 0 ? '+' : ''}{metrics?.averageChange.toFixed(2)}%
+                  </span>
+                )}
+              </div>
+              <div className="flex items-center gap-1 text-sm mt-2">
+                {metrics && metrics.averageChange >= 0 ? (
+                  <ArrowUpRight className="w-4 h-4 text-green-500" />
+                ) : (
+                  <ArrowDownRight className="w-4 h-4 text-red-500" />
+                )}
+                <span className={metrics && metrics.averageChange >= 0 ? 'text-green-500' : 'text-red-500'}>
+                  Market average
+                </span>
               </div>
             </CardContent>
           </Card>

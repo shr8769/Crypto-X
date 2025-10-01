@@ -26,24 +26,40 @@ const Navigation = () => {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            <button 
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => navigateToSection('crypto-prices')}
-            >
-              Crypto Prices
-            </button>
-            <button 
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => navigateToSection('crypto-news')}
-            >
-              Crypto News
-            </button>
-            <button 
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => navigateToSection('price-prediction')}
-            >
-              Price Prediction
-            </button>
+            {isSignedIn ? (
+              <>
+                <button 
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  onClick={() => navigateToSection('crypto-prices')}
+                >
+                  Crypto Prices
+                </button>
+                <button 
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  onClick={() => navigateToSection('crypto-news')}
+                >
+                  Crypto News
+                </button>
+                <button 
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  onClick={() => navigateToSection('price-prediction')}
+                >
+                  Price Prediction
+                </button>
+              </>
+            ) : (
+              <>
+                <button 
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  onClick={() => navigateToSection('crypto-news')}
+                >
+                  Crypto News
+                </button>
+                <Link to="/sign-up" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Features
+                </Link>
+              </>
+            )}
           </div>
 
           <div className="flex items-center gap-4">

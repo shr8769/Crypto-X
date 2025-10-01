@@ -1,7 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Hexagon } from "lucide-react";
+import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const { isSignedIn } = useUser();
+  const navigate = useNavigate();
+
+  const handleStartTrading = () => {
+    if (isSignedIn) {
+      navigate('/dashboard');
+    } else {
+      navigate('/sign-up');
+    }
+  };
+
+  const handleViewMarkets = () => {
+    if (isSignedIn) {
+      // Scroll to crypto prices section
+      document.getElementById('crypto-prices')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Navigate to sign-up for full market access
+      navigate('/sign-up');
+    }
+  };
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Background effects */}
@@ -32,10 +54,20 @@ const Hero = () => {
 
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button variant="hero" size="lg" className="w-full sm:w-auto">
-              Start Trading Now
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="w-full sm:w-auto"
+              onClick={handleStartTrading}
+            >
+              {isSignedIn ? 'Go to Dashboard' : 'Start Trading Now'}
             </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto group">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="w-full sm:w-auto group"
+              onClick={handleViewMarkets}
+            >
               View Markets
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
