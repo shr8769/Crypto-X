@@ -52,6 +52,24 @@ CryptoX is a **full-stack cryptocurrency trading platform** that combines real-t
 - **User Profile Management** with avatar and settings
 - **Session Management** with automatic token refresh
 - **Password Reset** functionality
+- ## 🧠 Machine Learning Models Used
+
+Crypto-X leverages multiple machine learning approaches for cryptocurrency analytics and prediction:
+
+| Purpose                  | Model Types Used                                                       |
+|--------------------------|-----------------------------------------------------------------------|
+| **Price Prediction**     | Random Forest, Gradient Boosting, Linear Regression, LSTM Neural Net  |
+| **Market Sentiment**     | Random Forest, Custom Sentiment Analyzer                              |
+| **Trading Signals**      | Random Forest, LSTM (details vary by implementation)                  |
+
+**Model Details:**
+- **Random Forest Regressor**: Used for time series price prediction and sentiment analysis.
+- **Gradient Boosting Regressor**: Available as an alternative for price prediction.
+- **Linear Regression**: Serves as a simple baseline.
+- **LSTM Neural Network**: Deep learning approach for advanced time series forecasting.
+- **Custom Sentiment Analyzer**: Combines news and social data for market sentiment scoring.
+
+See [`ml-service/models/simple_ml_model.py`](ml-service/models/simple_ml_model.py), [`ml-service/models/market_sentiment_model.py`](ml-service/models/market_sentiment_model.py), and the [AI Models section](#ai-models-implemented) for architecture details.
 
 ### 📊 **Real-Time Market Data**
 - **Live Cryptocurrency Prices** for major coins (BTC, ETH, ADA, SOL, MATIC)
